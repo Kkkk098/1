@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        ".eslintrc": "bat",
+        "pthread.h": "c",
+        "stdio.h": "c"
+    }
+}
