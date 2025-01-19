@@ -1,3 +1,6 @@
 # Ignore compiled files
 *.exe
+*.out
 *.dll
+
+/results/*

@@ -1,6 +1,7 @@
 from mpi4py import MPI
 import sys
 import math
+import time
 
 def is_prime(n):
     if n <= 1:
@@ -18,6 +19,8 @@ def calculate_primes(start, end):
     return [n for n in range(start, end) if is_prime(n)]
 
 def main():
+    start_time = time.time()
+
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank() 
     size = comm.Get_size()       
@@ -38,9 +41,21 @@ def main():
     all_primes = comm.gather(local_primes, root=0)
 
     if rank == 0:
+        print("Python MPI on %d numbers. Time: %s" % (upper_limit, time.time() - start_time))
         all_primes = [p for sublist in all_primes for p in sublist]
         all_primes.sort()
-        print(f"Primes up to {upper_limit}: {all_primes}")
+
+        write_string_buffer = [];
+        
+        for prime in all_primes:
+            write_string_buffer.append(str(prime) + "\n");
+        
+        try:
+            with open("./results/res_python_mpi.txt", "w") as f:
+                f.write("".join(write_string_buffer))
+        except FileExistsError:
+            print("Already exists.")
+
 
 if __name__ == "__main__":
     main()
