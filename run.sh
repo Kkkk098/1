@@ -6,7 +6,7 @@ module load mpi/impi/5.1.3.210
 module add python/3.9
 
 make
-mpiexec -n $1 ./res_mpi.out $2
-./res_openmp.out $1 $2
-./res_pthreads.out $1 $2
-mpiexec -n $1 python3 ./python-mpi/main.py $2
+time mpiexec -n $1 ./res_mpi.out $2
+time ./res_openmp.out $1 $2
+time ./res_pthreads.out $1 $2
+time mpiexec -n $1 python3 ./python-mpi/main.py $2
